@@ -1,0 +1,70 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            zipAlignEnabled false
+            shrinkResources false
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.runner
+    androidTestImplementation deps.test.espresso
+
+    // Support libraries
+    api deps.support.app_compat
+    api deps.support.constraint
+    api deps.support.v4
+
+    //Dagger
+    api deps.dagger.runtime
+    api deps.dagger.android
+    api deps.dagger.android_support
+
+    //view
+    api deps.material_dialog
+    api deps.logger
+
+    //router and retrofit
+    api deps.arouter_api
+    api deps.retrofit.runtime
+    api deps.retrofit.gson
+    api deps.persistent_cookie
+
+    //http
+    api deps.okhttp3
+
+    api deps.fastjson
+
+    //annotationProcessor
+    annotationProcessor deps.dagger.android_support_compiler
+    annotationProcessor deps.dagger.compiler
+}

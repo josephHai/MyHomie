@@ -1,0 +1,94 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
+ext.deps = [:]
+
+def versions = [:]
+versions.android_gradle_plugin = "3.4.1"
+versions.support = "28.0.0"
+versions.constraint = "2.0.0-beta1"
+versions.multidex = "1.0.3"
+versions.dagger = "2.22.1"
+versions.utils = "1.10.0"
+versions.material_dialog = "0.9.6.0"
+versions.persistent_cookie = "v1.0.1"
+versions.logger = "2.2.0"
+//test
+versions.test_junit = "4.12"
+versions.test_runner = "1.0.2"
+versions.test_expresso = "3.0.2"
+//ARouter
+versions.arouter_compiler = "1.2.2"
+versions.arouter_api = "1.5.0"
+//OkHttp3
+versions.okhttp3 = "3.14.2"
+versions.fastjson = "1.1.71.android"
+versions.retrofit = "2.5.0"
+
+
+
+def deps = [:]
+
+def support = [:]
+support.annotations = "com.android.support:support-annotations:$versions.support"
+support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+support.constraint = "com.android.support.constraint:constraint-layout:$versions.constraint"
+support.multidex = "com.android.support:multidex:$versions.multidex"
+support.v4 = "com.android.support:support-v4:$versions.support"
+deps.support = support
+
+def retrofit = [:]
+retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.adapter = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofi"
+retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+deps.retrofit = retrofit
+
+def test = [:]
+test.junit = "junit:junit:$versions.test_junit"
+test.runner = "com.android.support.test:runner:$versions.test_runner"
+test.espresso = "com.android.support.test.espresso:espresso-core:$versions.test_expresso"
+deps.test = test
+
+def dagger = [:]
+dagger.runtime = "com.google.dagger:dagger:$versions.dagger"
+dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
+dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
+dagger.compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
+dagger.android_support_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger"
+deps.dagger = dagger
+
+deps.okhttp3 = "com.squareup.okhttp3:okhttp:$versions.okhttp3"
+deps.fastjson = "com.alibaba:fastjson:$versions.fastjson"
+//view
+deps.material_dialog = "com.afollestad.material-dialogs:core:$versions.material_dialog"
+
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+//router
+deps.arouter_api = "com.alibaba:arouter-api:$versions.arouter_api"
+deps.arouter_compiler = "com.alibaba:arouter-compiler:$versions.arouter_compiler"
+
+//other
+deps.persistent_cookie = "com.github.franmontiel:PersistentCookieJar:$versions.persistent_cookie"
+deps.logger = "com.orhanobut:logger:$versions.logger"
+
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 19
+build_versions.target_sdk = 28
+build_versions.build_tools = "28.0.0"
+ext.build_versions = build_versions
+
+
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+    //Add the JitPack repository
+    handler.maven { url "https://jitpack.io" }
+    handler.maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+}
+
+ext.addRepos = this.&addRepos
