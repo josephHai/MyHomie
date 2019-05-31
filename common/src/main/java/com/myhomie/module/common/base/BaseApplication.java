@@ -2,6 +2,13 @@ package com.myhomie.module.common.base;
 
 import android.app.Application;
 
+import com.myhomie.module.common.utils.Utils;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
+
+import java.util.List;
+
+
 /**
  * 要想使用BaseApplication，必须在组件中实现自己的Application，并且继承BaseApplication；
  * 组件中实现的Application必须在debug包中的AndroidManifest.xml中注册，否则无法使用；
@@ -17,6 +24,7 @@ public class BaseApplication extends Application {
 
     private static BaseApplication sInstance;
 
+    private List<IApplicationDelegate> mAppDelegateList;
 
     public static BaseApplication getIns() {
         return sInstance;
@@ -26,21 +34,37 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        Logger.addLogAdapter(new AndroidLogAdapter());
+        Utils.init(this);
+        mAppDelegateList = ClassUtils.getObjectsWithInterface(this, IApplicationDelegate.class,
+                ROOT_PACKAGE);
+        for (IApplicationDelegate delegate : mAppDelegateList) {
+            delegate.onCreate();
+        }
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
+        for (IApplicationDelegate delegate : mAppDelegateList) {
+            delegate.onTerminate();
+        }
     }
 
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
+        for (IApplicationDelegate delegate : mAppDelegateList) {
+            delegate.onLowMemory();
+        }
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
+        for (IApplicationDelegate delegate : mAppDelegateList) {
+            delegate.onTrimMemory(level);
+        }
     }
 }

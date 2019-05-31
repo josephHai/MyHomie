@@ -43,6 +43,8 @@ dependencies {
     api deps.support.app_compat
     api deps.support.constraint
     api deps.support.v4
+    api deps.support.design
+    api deps.support.vector_drawable
 
     //Dagger
     api deps.dagger.runtime
@@ -61,10 +63,12 @@ dependencies {
 
     //http
     api deps.okhttp3
-
     api deps.fastjson
 
     //annotationProcessor
     annotationProcessor deps.dagger.android_support_compiler
     annotationProcessor deps.dagger.compiler
+
+    //arch
+    api deps.arch.lifecycle
 }

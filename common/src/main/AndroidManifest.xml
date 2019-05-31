@@ -16,7 +16,7 @@
     <application>
         <meta-data
             android:name="com.myhomie.module.common.glide.OkHttpGlideModule"
-            android:value="GlideModule" />
+            android:value="GlideModule"/>
 
     </application>
 
