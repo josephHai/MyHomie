@@ -2,7 +2,7 @@ package com.myhomie.module.common.utils;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;

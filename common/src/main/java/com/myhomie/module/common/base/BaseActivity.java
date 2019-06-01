@@ -1,9 +1,9 @@
 package com.myhomie.module.common.base;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.annotation.Keep;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.IdRes;
+import androidx.annotation.Keep;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 /**
