@@ -35,6 +35,8 @@ public class HttpClient {
     private static String BASE_URL = "";
     /*本地baseUrl*/
     private String baseUrl = "";
+    /*默认baseUrl*/
+    private static String defaultBaseUrl = "http://myhomie.chinaxueyun.com/info_platform/public/index.php/";
     private Retrofit retrofit;
     private static OkHttpClient okHttpClient;
     private Builder mBuilder;
@@ -263,6 +265,8 @@ public class HttpClient {
         public HttpClient build() {
             if (!TextUtils.isEmpty(builderBaseUrl)) {
                 BASE_URL = builderBaseUrl;
+            }else {
+                BASE_URL = defaultBaseUrl;
             }
             HttpClient client = getIns();
             client.getRetrofit();
