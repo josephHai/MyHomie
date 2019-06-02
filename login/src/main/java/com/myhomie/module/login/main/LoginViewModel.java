@@ -1,14 +1,19 @@
 package com.myhomie.module.login.main;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.myhomie.module.common.http.HttpClient;
 import com.myhomie.module.common.http.OnResultListener;
+import com.myhomie.module.login.R;
 import com.myhomie.module.login.data.LoginRepository;
 import com.myhomie.module.login.data.model.LoggedInUser;
-import com.myhomie.module.login.R;
 import com.orhanobut.logger.Logger;
 
 public class LoginViewModel extends ViewModel {
@@ -31,9 +36,8 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        String data = "{\"username\": "+ username + ", \"password\": " + password + "}";
+        String data = "{\"username\": "+ username + ", \"password\": \"" + password + "\"}";
         HttpClient client = new HttpClient.Builder()
-                .baseUrl("http://myhomie.chinaxueyun.com/info_platform/public/index.php/")
                 .url("login/index/login")
                 .tag("LOGIN")
                 .data(data)
@@ -41,11 +45,17 @@ public class LoginViewModel extends ViewModel {
         client.post(new OnResultListener<String>() {
             @Override
             public void onSuccess(String response) {
-                LoggedInUser data =
-                        new LoggedInUser(
-                                java.util.UUID.randomUUID().toString(),
-                                "Jane Doe");
-                loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+                JSONObject res = JSON.parseObject(response);
+                if (res.getString("status_code").equals("0")) {
+                    loginResult.setValue(new LoginResult(res.getString("msg")));
+                }else {
+                    getUserInfo();
+                    LoggedInUser data =
+                            new LoggedInUser(
+                                    java.util.UUID.randomUUID().toString(),
+                                    "Jane Doe");
+                    loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+                }
             }
 
             @Override
@@ -84,5 +94,31 @@ public class LoginViewModel extends ViewModel {
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
+    }
+
+    private void getUserInfo() {
+        HttpClient client = new HttpClient.Builder()
+                .url("user/index/getUserInfo")
+                .tag("USER_INFO")
+                .build();
+        client.post(new OnResultListener<String>(){
+            @Override
+            public void onSuccess(String result) {
+                JSONObject res = JSONObject.parseObject(result);
+                Logger.e(result);
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                loginResult.setValue(new LoginResult(R.string.get_info_failed));
+                Logger.e(message);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                loginResult.setValue(new LoginResult(R.string.get_info_failed));
+                Logger.e(message);
+            }
+        });
     }
 }

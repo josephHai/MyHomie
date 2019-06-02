@@ -3,10 +3,11 @@ package com.myhomie.module.login.main;
 import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -18,9 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.myhomie.module.common.base.BaseActivity;
 import com.myhomie.module.login.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private LoginViewModel loginViewModel;
 
@@ -34,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         final TextInputEditText usernameEditText = findViewById(R.id.username);
         final TextInputEditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button registerButton = findViewById(R.id.register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -62,13 +65,16 @@ public class LoginActivity extends AppCompatActivity {
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
                 }
+                if (loginResult.getErrorMsg() != null) {
+                    showErrorMsg(loginResult.getErrorMsg());
+                }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
                 }
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                finish();
+                //finish();
             }
         });
 
@@ -111,6 +117,14 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
@@ -121,5 +135,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showErrorMsg(String errorMsg) {
+        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }
