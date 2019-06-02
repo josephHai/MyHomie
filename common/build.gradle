@@ -71,4 +71,7 @@ dependencies {
 
     //arch
     api deps.arch.lifecycle
+
+    //img
+    api deps.glide
 }
