@@ -6,6 +6,7 @@
     <string name="bottom_personal">个人</string>
     <string name="drawer_item_home">首页</string>
     <string name="drawer_item_settings">设置</string>
+    <string name="item_description">图片描述</string>
     <string name="menu_search">搜索</string>
     <string name="menu_setting">设置</string>
     <string name="search_hint">点击以搜索</string>

@@ -15,6 +15,7 @@
         android:label="@string/app_post"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".main.PostItemActivity"/>
         <activity
             android:name=".main.LauncherActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
