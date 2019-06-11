@@ -15,7 +15,7 @@
         android:id="@+id/telInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/prompt_tel"
+        android:hint="@string/prompt_username"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
@@ -54,6 +54,27 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nicknameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_nickname"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordInput" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/codeInput"
         android:layout_width="70pt"
         android:layout_height="wrap_content"
@@ -63,7 +84,7 @@
         android:layout_marginEnd="24dp"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordInput"
+        app:layout_constraintTop_toBottomOf="@id/nicknameInput"
         app:layout_constraintBottom_toBottomOf="@id/imgCode">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -79,7 +100,7 @@
         android:layout_width="40pt"
         android:layout_height="60dp"
         android:contentDescription="@string/img_code"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
 
         app:layout_constraintStart_toEndOf = "@id/codeInput"
         app:layout_constraintBottom_toBottomOf="@id/codeInput"/>
