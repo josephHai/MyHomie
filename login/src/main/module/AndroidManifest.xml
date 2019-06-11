@@ -24,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.CodeActivity" />
         <activity
             android:name=".main.RegisterActivity"
             android:label="@string/title_activity_register" />

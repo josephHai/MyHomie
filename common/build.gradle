@@ -54,6 +54,9 @@ dependencies {
     //view
     api deps.material_dialog
     api deps.logger
+    api deps.search_view
+    api deps.drawer
+    api deps.brvah
 
     //router and retrofit
     api deps.arouter_api
