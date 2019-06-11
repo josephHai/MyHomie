@@ -36,7 +36,7 @@ public class HttpClient {
     /*本地baseUrl*/
     private String baseUrl = "";
     /*默认baseUrl*/
-    private static String defaultBaseUrl = "http://myhomie.chinaxueyun.com/info_platform/public/index.php/";
+    private static String defaultBaseUrl = "https://www.buxizhou.com/app/";
     private Retrofit retrofit;
     private static OkHttpClient okHttpClient;
     private Builder mBuilder;
