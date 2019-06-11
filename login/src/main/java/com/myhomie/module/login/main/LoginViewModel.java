@@ -36,17 +36,18 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        String data = "{\"username\": "+ username + ", \"password\": \"" + password + "\"}";
+        String data = "{\"username\": \""+ username + "\", \"password\": \"" + password + "\"}";
         HttpClient client = new HttpClient.Builder()
-                .url("login/index/login")
+                .url("login")
                 .tag("LOGIN")
                 .data(data)
                 .build();
         client.post(new OnResultListener<String>() {
             @Override
             public void onSuccess(String response) {
+                System.out.println(response);
                 JSONObject res = JSON.parseObject(response);
-                if (res.getString("status_code").equals("0")) {
+                if (res.getString("status").equals("0")) {
                     loginResult.setValue(new LoginResult(res.getString("msg")));
                 }else {
                     getUserInfo();

@@ -4,7 +4,8 @@
     <string name="title_activity_register">注册</string>
     <string name="prompt_username">用户名</string>
     <string name="prompt_password">密码</string>
-    <string name="prompt_tel">手机号码</string>
+    <string name="prompt_nickname">昵称</string>
+    <string name="prompt_avatar">头像</string>
     <string name="prompt_code">验证码</string>
     <string name="img_code">图形验证码</string>
     <string name="action_sign_in">登录或注册</string>
