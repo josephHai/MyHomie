@@ -1,5 +1,6 @@
 package com.myhomie.module.login.main;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,6 +10,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.myhomie.module.common.base.BaseApplication;
 import com.myhomie.module.common.http.HttpClient;
 import com.myhomie.module.common.http.OnResultListener;
 import com.myhomie.module.login.R;
@@ -45,17 +48,14 @@ public class LoginViewModel extends ViewModel {
         client.post(new OnResultListener<String>() {
             @Override
             public void onSuccess(String response) {
-                System.out.println(response);
                 JSONObject res = JSON.parseObject(response);
                 if (res.getString("status").equals("0")) {
                     loginResult.setValue(new LoginResult(res.getString("msg")));
                 }else {
+                    JSONObject data = JSONObject.parseObject(res.getString("data"));
+                    BaseApplication.getIns().setToken(data.getString("token"));
+                    System.out.println(data.getString("token"));
                     getUserInfo();
-                    LoggedInUser data =
-                            new LoggedInUser(
-                                    java.util.UUID.randomUUID().toString(),
-                                    "Jane Doe");
-                    loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
                 }
             }
 
@@ -99,13 +99,16 @@ public class LoginViewModel extends ViewModel {
 
     private void getUserInfo() {
         HttpClient client = new HttpClient.Builder()
-                .url("user/index/getUserInfo")
+                .url("getUserInfo")
                 .tag("USER_INFO")
                 .build();
-        client.post(new OnResultListener<String>(){
+        client.get(new OnResultListener<String>(){
             @Override
             public void onSuccess(String result) {
                 JSONObject res = JSONObject.parseObject(result);
+                LoggedInUser user = JSONObject.parseObject(result, new TypeReference<LoggedInUser>() {});
+
+                loginResult.setValue(new LoginResult(new LoggedInUserView(user.getNickname())));
                 Logger.e(result);
             }
 

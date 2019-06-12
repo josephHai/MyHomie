@@ -36,7 +36,7 @@ class LoginResult {
     }
 
     @Nullable
-    public String getErrorMsg() {
+    String getErrorMsg() {
         return errorMsg;
     }
 }

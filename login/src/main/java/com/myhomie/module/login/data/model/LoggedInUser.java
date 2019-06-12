@@ -5,19 +5,19 @@ package com.myhomie.module.login.data.model;
  */
 public class LoggedInUser {
 
-    private String userId;
-    private String displayName;
+    private String id;
+    private String nickname;
 
-    public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
-        this.displayName = displayName;
+    public LoggedInUser(String id, String nickname) {
+        this.id = id;
+        this.nickname = nickname;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getNickname() {
+        return nickname;
     }
 }

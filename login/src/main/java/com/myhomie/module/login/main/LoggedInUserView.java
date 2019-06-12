@@ -4,14 +4,14 @@ package com.myhomie.module.login.main;
  * Class exposing authenticated user details to the UI.
  */
 class LoggedInUserView {
-    private String displayName;
+    private String nickname;
     //... other data fields that may be accessible to the UI
 
-    LoggedInUserView(String displayName) {
-        this.displayName = displayName;
+    LoggedInUserView(String nickname) {
+        this.nickname = nickname;
     }
 
-    String getDisplayName() {
-        return displayName;
+    String getNickname() {
+        return nickname;
     }
 }
