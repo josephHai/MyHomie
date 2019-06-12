@@ -65,6 +65,7 @@ public class HttpClient {
         okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .addInterceptor(new LoggerInterceptor(null, true))
+                .addInterceptor(new RequestInterceptor())
                 .cookieJar(cookieJar)
                 .build();
     }

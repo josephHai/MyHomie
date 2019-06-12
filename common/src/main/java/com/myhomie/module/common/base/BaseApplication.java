@@ -28,6 +28,8 @@ public class BaseApplication extends Application {
 
     private List<IApplicationDelegate> mAppDelegateList;
 
+    private String token = "";
+
     public static BaseApplication getIns() {
         return sInstance;
     }
@@ -68,5 +70,13 @@ public class BaseApplication extends Application {
         for (IApplicationDelegate delegate : mAppDelegateList) {
             delegate.onTrimMemory(level);
         }
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
