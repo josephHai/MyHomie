@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.myhomie.module">
 
     <application
+        tools:replace="android.allowBackup"
         android:name="com.myhomie.module.MyApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
