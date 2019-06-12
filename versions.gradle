@@ -76,6 +76,9 @@ def arch = [:]
 arch.lifecycle = 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 deps.arch = arch
 
+def utils = [:]
+deps.utils = utils
+
 //http
 deps.okhttp3 = "com.squareup.okhttp3:okhttp:$versions.okhttp3"
 deps.fastjson = "com.alibaba:fastjson:$versions.fastjson"
