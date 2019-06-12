@@ -6,13 +6,9 @@
     <string name="prompt_password">密码</string>
     <string name="prompt_nickname">昵称</string>
     <string name="prompt_avatar">头像</string>
-    <string name="prompt_code">验证码</string>
-    <string name="img_code">图形验证码</string>
     <string name="action_sign_in">登录或注册</string>
     <string name="action_sign_in_short">登录</string>
     <string name="action_sign_up">注册</string>
-    <string name="action_code">获取验证码</string>
-    <string name="action_re_code">重新获取验证码</string>
     <string name="action_next">下一步</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">无效用户名</string>

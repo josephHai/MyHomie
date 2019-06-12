@@ -12,7 +12,27 @@
     tools:context=".main.RegisterActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/telInput"
+        android:id="@+id/nicknameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_nickname"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:selectAllOnFocus="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_username"
@@ -22,13 +42,12 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/nicknameInput">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tel"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
             android:selectAllOnFocus="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,7 +62,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/telInput" >
+        app:layout_constraintTop_toBottomOf="@+id/usernameInput" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
@@ -53,68 +72,34 @@
             android:selectAllOnFocus="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nicknameInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_nickname"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInput" >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:selectAllOnFocus="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/codeInput"
-        android:layout_width="70pt"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_code"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nicknameInput"
-        app:layout_constraintBottom_toBottomOf="@id/imgCode">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:selectAllOnFocus="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ImageView
-        android:id="@+id/imgCode"
-        android:layout_width="40pt"
-        android:layout_height="60dp"
-        android:contentDescription="@string/img_code"
-        android:layout_marginStart="20dp"
-
-        app:layout_constraintStart_toEndOf = "@id/codeInput"
-        app:layout_constraintBottom_toBottomOf="@id/codeInput"/>
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/next"
+        android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:text="@string/action_next"
+        android:text="@string/action_sign_up"
         android:layout_marginTop="24dp"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/codeInput"/>
+        app:layout_constraintTop_toBottomOf="@id/passwordInput"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/registerBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/prompt_nickname"
+
+        app:layout_constraintTop_toBottomOf="@id/fileBtn"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
