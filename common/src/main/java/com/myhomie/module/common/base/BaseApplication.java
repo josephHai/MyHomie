@@ -8,6 +8,8 @@ import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+
 
 /**
  * 要想使用BaseApplication，必须在组件中实现自己的Application，并且继承BaseApplication；

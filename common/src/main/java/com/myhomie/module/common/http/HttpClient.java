@@ -16,6 +16,7 @@ import com.myhomie.module.common.utils.ToastUtils;
 import com.myhomie.module.common.utils.Utils;
 import com.orhanobut.logger.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,12 +24,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.Multipart;
 
 public class HttpClient {
     /*用户设置的baseUrl*/
@@ -84,8 +89,17 @@ public class HttpClient {
 
     public void post(final OnResultListener onResultListener) {
         Builder builder = mBuilder;
-        mCall = retrofit.create(ApiService.class)
-                .executePost(builder.url, builder.data);
+        if (!builder.files.isEmpty()) {
+            Map<String, RequestBody> params = new HashMap<>();
+            for (Map.Entry<String, String> entry : builder.data.entrySet()) {
+                params.put(entry.getKey(), RequestBody.create(MediaType.parse("text/plain"),
+                        entry.getValue()));
+            }
+            mCall = retrofit.create(ApiService.class).executePost(builder.url, params, builder.files);
+        }else {
+            mCall = retrofit.create(ApiService.class).executePost(builder.url, builder.data);
+        }
+
         putCall(builder, mCall);
         request(builder, onResultListener);
     }
@@ -196,6 +210,7 @@ public class HttpClient {
         private Object tag;
         private Map<String, String> params = new HashMap<>();
         private Map<String, String> data;
+        private List<MultipartBody.Part> files = new ArrayList<>();
         /*返回数据的类型 默认是String*/
         @DataType.Type
         private int bodyType = DataType.STRING;
@@ -243,9 +258,48 @@ public class HttpClient {
             return this;
         }
 
+        /***
+         * 添加post数据
+         *
+         * @param data :
+         * @return : com.myhomie.module.common.http.HttpClient.Builder
+         */
         @SuppressWarnings("unchecked")
         public Builder data(String data) {
             this.data = JSON.parseObject(data, Map.class);
+            return this;
+        }
+
+        /***
+         * 添加一个文件
+         *
+         * @param description : 参数名
+         * @param file : 文件对象
+         * @return : com.myhomie.module.common.http.HttpClient.Builder
+         */
+        public Builder file(String description, File file) {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData(description, file.getName(),
+                    requestBody);
+            this.files.add(body);
+            return this;
+        }
+
+        /***
+         * 添加多个文件
+         *
+         * @param fileMap : <String, File>
+         * @return : com.myhomie.module.common.http.HttpClient.Builder
+         */
+        public Builder files(Map<String, File> fileMap) {
+            RequestBody requestBody;
+            MultipartBody.Part body;
+            for (Map.Entry<String, File> entry : fileMap.entrySet()) {
+                requestBody = RequestBody.create(MediaType.parse("image/*"), entry.getValue());
+                body = MultipartBody.Part.createFormData(entry.getKey(), entry.getValue().getName(),
+                        requestBody);
+                this.files.add(body);
+            }
             return this;
         }
 

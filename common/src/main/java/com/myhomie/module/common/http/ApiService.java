@@ -1,14 +1,20 @@
 package com.myhomie.module.common.http;
 
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
@@ -27,6 +33,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST
     Call<ResponseBody> executePost(@Url String url, @FieldMap Map<String, String> map);
+
+    /**
+     * 携带参数的文件上传
+     */
+    @Multipart
+    @POST
+    Call<ResponseBody> executePost(@Url String url, @PartMap Map<String, RequestBody> params,
+                                   @Part List<MultipartBody.Part> parts);
 
     /**
      * 流式下载,不加这个注解的话,会整个文件字节数组全部加载进内存,可能导致oom
