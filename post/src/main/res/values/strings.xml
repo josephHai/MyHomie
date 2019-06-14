@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_post">post</string>
+    <string name="app_post">首页</string>
     <string name="app_label">搜索</string>
     <string name="bottom_home">首页</string>
     <string name="bottom_post">发布</string>
@@ -10,4 +10,5 @@
     <string name="menu_search">搜索</string>
     <string name="menu_setting">设置</string>
     <string name="search_hint">点击以搜索</string>
+    <string name="title_activity_search">搜索</string>
 </resources>
