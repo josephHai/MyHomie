@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_main">main组件</string>
-
-    <string name="app_exit_hint">再按一次退出程序</string>
-    <string name="title_activity_fragment_module">Fragment组件化</string>
-    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-
+    <string name="app_main">首页</string>
+    <string name="app_label">搜索</string>
+    <string name="bottom_home">首页</string>
+    <string name="bottom_post">发布</string>
+    <string name="bottom_personal">个人</string>
+    <string name="drawer_item_home">首页</string>
+    <string name="drawer_item_settings">设置</string>
+    <string name="item_description">图片描述</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_setting">设置</string>
+    <string name="search_hint">点击以搜索</string>
+    <string name="title_activity_search">搜索</string>
 </resources>

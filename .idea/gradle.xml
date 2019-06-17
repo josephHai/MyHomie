@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/main" />
             <option value="$PROJECT_DIR$/post" />
-            <option value="$PROJECT_DIR$/release" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

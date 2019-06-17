@@ -1,4 +1,4 @@
-package com.myhomie.module.post;
+package com.myhomie.module.main;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.myhomie.module.release", appContext.getPackageName());
+        assertEquals("com.myhomie.module.main", appContext.getPackageName());
     }
 }

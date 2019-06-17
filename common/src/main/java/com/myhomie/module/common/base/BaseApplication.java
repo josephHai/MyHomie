@@ -2,14 +2,12 @@ package com.myhomie.module.common.base;
 
 import android.app.Application;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.myhomie.module.common.utils.Utils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
-
-import okhttp3.OkHttpClient;
-
 
 /**
  * 要想使用BaseApplication，必须在组件中实现自己的Application，并且继承BaseApplication；
@@ -45,6 +43,12 @@ public class BaseApplication extends Application {
         for (IApplicationDelegate delegate : mAppDelegateList) {
             delegate.onCreate();
         }
+
+        if (Utils.isAppDebug()) {
+            ARouter.openLog();     // 打印日志
+            ARouter.openDebug(); // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+        }
+        ARouter.init(this);
     }
 
     @Override

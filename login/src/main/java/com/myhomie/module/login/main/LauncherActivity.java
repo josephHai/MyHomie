@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.myhomie.module.common.base.BaseActivity;
 import com.myhomie.module.login.R;
 
+@Route(path = "/login/login")
 public class LauncherActivity extends BaseActivity {
 
     @Override

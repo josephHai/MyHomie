@@ -3,7 +3,7 @@
     package="com.myhomie.module.main">
 
     <application android:theme="@style/AppTheme">
-        <activity android:name="com.myhomie.module.main.MainActivity">
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

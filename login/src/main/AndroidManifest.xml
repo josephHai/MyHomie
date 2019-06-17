@@ -3,8 +3,7 @@
     package="com.myhomie.module.login">
 
     <application android:theme="@style/AppTheme">
-        <activity android:name=".main.LoginActivity"
-            android:theme="@style/AppTheme"/>
+        <activity android:name=".main.LoginActivity"/>
     </application>
 
 </manifest>
