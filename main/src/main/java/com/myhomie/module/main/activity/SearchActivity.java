@@ -1,4 +1,4 @@
-package com.myhomie.module.main;
+package com.myhomie.module.main.activity;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends BaseActivity {
-    private List<PostBean> postList = new ArrayList<PostBean>();
+    private List<PostBean> postList = new ArrayList<>();
     private RecyclerView recyclerView;
     Toolbar mToolbar;
     SearchView searchView;
@@ -43,13 +43,13 @@ public class SearchActivity extends BaseActivity {
     private void modifiedList() {
         PostAdapter adapter = new PostAdapter(R.layout.activity_post_item, postList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView = (RecyclerView) findViewById(R.id.list);
+        recyclerView = findViewById(R.id.list);
 
         for (int i = 0; i < 10; i++){
-            PostBean apple = new PostBean("apple", R.drawable.apple);
+            PostBean apple = new PostBean(100-i,"apple", R.drawable.apple);
             postList.add(apple);
 
-            PostBean watermelon = new PostBean("watermelon", R.drawable.watermelon);
+            PostBean watermelon = new PostBean(100-i, "watermelon", R.drawable.watermelon);
             postList.add(watermelon);
         }
 
@@ -59,7 +59,7 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void initListener() {
-        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
