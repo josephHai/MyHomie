@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.myhomie.module.main">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -10,11 +11,19 @@
 
     <application
         android:name="debug.MainApplication"
-        android:allowBackup="false"
+        tools:replace="android:icon, android:label"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_main"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.LauncherActivity"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.SearchActivity"
             android:label="@string/title_activity_search"
@@ -24,15 +33,6 @@
             </intent-filter>
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
-        </activity>
-        <activity android:name=".activity.PostItemActivity" />
-        <activity
-            android:name=".activity.LauncherActivity"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

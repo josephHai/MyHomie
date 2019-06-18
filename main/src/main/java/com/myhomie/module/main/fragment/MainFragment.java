@@ -2,11 +2,13 @@ package com.myhomie.module.main.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -25,21 +29,30 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.myhomie.module.common.http.HttpClient;
+import com.myhomie.module.common.http.OnResultListener;
 import com.myhomie.module.main.R;
-import com.myhomie.module.main.adapter.PostAdapter;
-import com.myhomie.module.main.bean.PostBean;
+import com.myhomie.module.main.adapter.PostCardAdapter;
+import com.myhomie.module.main.bean.PostCardBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends Fragment {
-    private List<PostBean> postList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private Toolbar mToolbar;
     private View view;
     private Callbacks mCallbacks;
+
+    private RecyclerView mRecyclerView;
+    private List<PostCardBean> postCardList = new ArrayList<>();
+    private PostCardAdapter postCardAdapter;
+    private EasyRefreshLayout mEasyRefreshLayout;
+
+    private int delayMillis = 1000;
+
+    private static final Integer PAGE_SIZE = 6;
+    private Integer currentPage = 1;
+
+    private int mCurrentCounter = 0;
 
     //定义一个回调接口，在Activity中需要实现
     //该Fragment将通过该接口与他它所在的Activity交互
@@ -50,13 +63,18 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // 私有属性初始化
         view = inflater.inflate(R.layout.fragment_main, null);
+        mEasyRefreshLayout = view.findViewById(R.id.easy_layout);
+
+        // 使菜单栏显示
         setHasOptionsMenu(true);
-        mToolbar = view.findViewById(R.id.toolbar);
+        Toolbar mToolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
 
-        initList();
+        initAdapter();
         initDrawer();
+        initRefresh();
 
         return view;
     }
@@ -77,24 +95,46 @@ public class MainFragment extends Fragment {
         mCallbacks = null;
     }
 
-    private void initList() {
-        PostAdapter adapter = new PostAdapter(R.layout.activity_post_item, postList);
+    private void initAdapter() {
+        postCardAdapter = new PostCardAdapter(R.layout.post_card, postCardList);
+        postCardAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView = view.findViewById(R.id.list);
+        mRecyclerView = view.findViewById(R.id.main_list);
 
-        for (int i = 0; i < 10; i++){
-            PostBean apple = new PostBean(100-i,"apple", R.drawable.apple);
-            postList.add(apple);
-
-            PostBean watermelon = new PostBean(50-i, "watermelon", R.drawable.watermelon);
-            postList.add(watermelon);
-        }
-
+        initList();
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(postCardAdapter);
 
-        adapter.setOnItemClickListener((adapter1, view, position) -> mCallbacks.onItemSelectedListener(position));
+        postCardAdapter.setOnItemClickListener((adapter1, view, position)
+                -> mCallbacks.onItemSelectedListener(postCardAdapter.getData().get(position).getId()));
+    }
+
+    private void initList() {
+        HttpClient client = new HttpClient.Builder()
+                .params("limit", PAGE_SIZE.toString())
+                .params("page", "1")
+                .url("post/queryPosts")
+                .tag("QUERY_POSTS")
+                .build();
+
+        client.get(new OnResultListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+                JSONObject res = JSONObject.parseObject(result);
+                if (res.getString("status").equals("0")) {
+                    Toast.makeText(view.getContext(), res.getString("msg"), Toast.LENGTH_LONG).show();
+                }else {
+                    String data = JSONObject.parseObject(res.getString("data")).getString("list");
+                    postCardAdapter.setNewData(JSONObject.parseArray(data, PostCardBean.class));
+                    mCurrentCounter = PAGE_SIZE;
+                    currentPage = 1;
+                    mEasyRefreshLayout.refreshComplete();
+                    Toast.makeText(getActivity(), "refresh success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void initDrawer() {
@@ -136,5 +176,49 @@ public class MainFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.main_menu, menu);
+    }
+
+    private void initRefresh() {
+        mEasyRefreshLayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+            @Override
+            public void onLoadMore() {
+
+                new Handler().postDelayed(() -> {
+                    Integer page = (currentPage + 1);
+                    HttpClient client = new HttpClient.Builder()
+                            .params("limit", PAGE_SIZE.toString())
+                            .params("page", page.toString())
+                            .url("post/queryPosts")
+                            .tag("QUERY_POSTS")
+                            .build();
+
+                    client.get(new OnResultListener<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            JSONObject res = JSONObject.parseObject(result);
+                            if (res.getString("status").equals("0")) {
+                                Toast.makeText(view.getContext(), res.getString("msg"), Toast.LENGTH_LONG).show();
+                            }else {
+                                String data = JSONObject.parseObject(res.getString("data")).getString("list");
+                                mEasyRefreshLayout.loadMoreComplete(new EasyRefreshLayout.Event() {
+                                    @Override
+                                    public void complete() {
+                                        postCardAdapter.getData().addAll(JSONObject.parseArray(data, PostCardBean.class));
+                                        postCardAdapter.notifyDataSetChanged();
+                                        currentPage++;
+                                        mCurrentCounter = postCardAdapter.getData().size();
+                                    }
+                                }, 500);
+                            }
+                        }
+                    });
+                }, 2000);
+            }
+
+            @Override
+            public void onRefreshing() {
+                new Handler().postDelayed(() -> initList(), delayMillis);
+            }
+        });
     }
 }

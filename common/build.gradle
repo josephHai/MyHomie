@@ -57,6 +57,7 @@ dependencies {
     api deps.search_view
     api deps.drawer
     api deps.brvah
+    api deps.easy_refresh
 
     //router and retrofit
     api deps.arouter_api

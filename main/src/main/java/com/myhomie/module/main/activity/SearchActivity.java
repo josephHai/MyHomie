@@ -37,7 +37,7 @@ public class SearchActivity extends BaseActivity {
         }
 
         initListener();
-        modifiedList();
+        //modifiedList();
     }
 
     private void modifiedList() {
