@@ -112,10 +112,11 @@ public class HttpClient {
             for (Map.Entry<String, String> entry : builder.params.entrySet()) {
                 String mapKey = entry.getKey();
                 String mapValue = entry.getValue();
-                String span = value.equals(" ") ? "" : "&";
+                String span = value.equals("") ? "" : "&";
                 String part = StringUtils.buffer(span, mapKey, "=", mapValue);
-                value = StringUtils.buffer(builder.url, "?", value);
+                value = StringUtils.buffer(value, "?", part);
             }
+            builder.url += value;
         }
         mCall = retrofit.create(ApiService.class).executeGet(builder.url);
         putCall(builder, mCall);
