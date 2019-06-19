@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category">
+        <item>Event</item>
+        <item>2nd-Hand</item>
+    </string-array>
+</resources>

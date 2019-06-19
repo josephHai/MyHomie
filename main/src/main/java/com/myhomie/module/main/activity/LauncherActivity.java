@@ -11,9 +11,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myhomie.module.common.base.BaseActivity;
 import com.myhomie.module.main.R;
 import com.myhomie.module.main.fragment.MainFragment;
+import com.myhomie.module.main.fragment.ReleaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LauncherActivity extends BaseActivity implements MainFragment.Callbacks {
+    private List<Fragment> mFragmentList;
     private Fragment mCurrentFragment;
+
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -23,10 +29,8 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        initListener();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.layoutPager, new MainFragment())
-                .commit();
+        initFragment();
+        initBottomNavigationView();
     }
 
     @Override
@@ -39,13 +43,22 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
         return super.onOptionsItemSelected(item);
     }
 
-    private void initListener() {
+    private void initFragment() {
+        mFragmentList = new ArrayList<>();
+        mFragmentList.add(new MainFragment());
+        mFragmentList.add(new ReleaseFragment());
+    }
+
+    private void initBottomNavigationView() {
+        addFragment(R.id.layoutPager, mFragmentList.get(0));
+
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            String title = menuItem.getTitle().toString();
             switch (menuItem.getItemId()) {
                 case R.id.bottomHome:
+                    addFragment(R.id.layoutPager, mFragmentList.get(0));
                     break;
                 case R.id.bottomPost:
+                    addFragment(R.id.layoutPager, mFragmentList.get(1));
                     break;
                 case R.id.bottomPersonal:
                     break;
@@ -53,6 +66,7 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
             return true;
         });
     }
+
 
 
     /***
