@@ -90,6 +90,9 @@ public class HttpClient {
 
     public void post(final OnResultListener onResultListener) {
         Builder builder = mBuilder;
+        if (!builder.params.isEmpty()) {
+            builder.data.putAll(builder.params);
+        }
         if (!builder.files.isEmpty()) {
             Map<String, RequestBody> params = new HashMap<>();
             for (Map.Entry<String, String> entry : builder.data.entrySet()) {
@@ -211,7 +214,7 @@ public class HttpClient {
         private String url;
         private Object tag;
         private Map<String, String> params = new HashMap<>();
-        private Map<String, String> data;
+        private Map<String, String> data = new HashMap<>();
         private List<MultipartBody.Part> files = new ArrayList<>();
         /*返回数据的类型 默认是String*/
         @DataType.Type
