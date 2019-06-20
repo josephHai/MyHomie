@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myhomie.module.common.base.BaseActivity;
+import com.myhomie.module.main.fragment.PersonFragment;
 import com.myhomie.module.main.R;
 import com.myhomie.module.main.fragment.MainFragment;
 import com.myhomie.module.main.fragment.ReleaseFragment;
@@ -47,6 +48,7 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
         mFragmentList = new ArrayList<>();
         mFragmentList.add(new MainFragment());
         mFragmentList.add(new ReleaseFragment());
+        mFragmentList.add(new PersonFragment());
     }
 
     private void initBottomNavigationView() {
@@ -61,6 +63,7 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
                     addFragment(R.id.layoutPager, mFragmentList.get(1));
                     break;
                 case R.id.bottomPersonal:
+                    addFragment(R.id.layoutPager, mFragmentList.get(2));
                     break;
             }
             return true;
