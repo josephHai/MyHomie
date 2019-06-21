@@ -78,4 +78,7 @@ dependencies {
 
     //img
     api deps.glide
+
+    //sql
+    api deps.stetho
 }

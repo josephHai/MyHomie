@@ -1,18 +1,17 @@
 package com.myhomie.module.login.main;
 
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.myhomie.module.common.base.BaseApplication;
 import com.myhomie.module.common.http.HttpClient;
 import com.myhomie.module.common.http.OnResultListener;
 import com.myhomie.module.login.R;
 import com.myhomie.module.login.data.LoginRepository;
-import com.myhomie.module.login.data.model.LoggedInUser;
 import com.orhanobut.logger.Logger;
 
 public class LoginViewModel extends ViewModel {
@@ -99,10 +98,14 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onSuccess(String result) {
                 JSONObject res = JSONObject.parseObject(result);
-                LoggedInUser user = JSONObject.parseObject(result, new TypeReference<LoggedInUser>() {});
-
-                loginResult.setValue(new LoginResult(new LoggedInUserView(user.getNickname())));
-                Logger.e(result);
+                if (res.getString("status").equals("1")) {
+                    LoggedInUserView userView = JSONObject.parseObject(res.getString("data")
+                            , LoggedInUserView.class);
+                    loginResult.setValue(new LoginResult(userView));
+                    Logger.e(result);
+                }else {
+                    Logger.e(res.getString("msg"));
+                }
             }
 
             @Override

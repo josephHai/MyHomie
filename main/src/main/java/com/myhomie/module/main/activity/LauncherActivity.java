@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myhomie.module.common.base.BaseActivity;
 import com.myhomie.module.main.fragment.PersonFragment;
@@ -17,6 +18,7 @@ import com.myhomie.module.main.fragment.ReleaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+@Route(path = "/main/main")
 public class LauncherActivity extends BaseActivity implements MainFragment.Callbacks {
     private List<Fragment> mFragmentList;
     private Fragment mCurrentFragment;

@@ -1,18 +1,15 @@
-package com.myhomie.module.login.main;
+package com.myhomie.module.common.model;
 
 import androidx.annotation.NonNull;
 
-/**
- * Class exposing authenticated user details to the UI.
- */
-class LoggedInUserView {
+public class User {
     private String id;
     private String username;
     private String password;
     private String nickname;
     private String avatar;
 
-    public LoggedInUserView() {
+    public User() {
     }
 
     public String getId() {
@@ -39,7 +36,7 @@ class LoggedInUserView {
         this.password = password;
     }
 
-    String getNickname() {
+    public String getNickname() {
         return nickname;
     }
 
@@ -58,7 +55,7 @@ class LoggedInUserView {
     @NonNull
     @Override
     public String toString() {
-        return "LoggedInUserView{" +
+        return "User{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

@@ -1,10 +1,13 @@
 package com.myhomie.module.common.base;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import androidx.annotation.IdRes;
 import androidx.annotation.Keep;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+
+import com.myhomie.module.common.MyDBHelper;
 
 /**
  * <p>Activity基类 </p>
@@ -14,6 +17,7 @@ import android.view.View;
  */
 @Keep
 public abstract class BaseActivity extends AppCompatActivity {
+    private MyDBHelper dbHelper;
     /**
      * 封装的findViewByID方法
      */
@@ -25,8 +29,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
 
+        dbHelper = new MyDBHelper(getApplicationContext());
+    }
 
     @Override
     protected void onDestroy() {
@@ -37,5 +42,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public MyDBHelper getDbHelper() {
+        return dbHelper;
+    }
+
+    public void setDbHelper(MyDBHelper dbHelper) {
+        this.dbHelper = dbHelper;
     }
 }
