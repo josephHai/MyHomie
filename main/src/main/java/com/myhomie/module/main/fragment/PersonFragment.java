@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.myhomie.module.common.http.HttpClient;
 import com.myhomie.module.main.R;
@@ -54,7 +55,7 @@ public class PersonFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView = view.findViewById(R.id.person_list);
 
-        mList.add(new ListBean(R.drawable.add, "添加"));
+        mList.add(new ListBean(R.drawable.add, "登录"));
 
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -64,6 +65,13 @@ public class PersonFragment extends Fragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 System.out.println(position);
+                switch (position) {
+                    case 0:
+                        ARouter.getInstance().build("/login/main").navigation();
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }

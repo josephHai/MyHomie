@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.myhomie.module.common.ARouterConfig;
 import com.myhomie.module.common.base.BaseActivity;
 import com.myhomie.module.main.fragment.PersonFragment;
 import com.myhomie.module.main.R;
@@ -18,7 +20,6 @@ import com.myhomie.module.main.fragment.ReleaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-@Route(path = "/main/main")
 public class LauncherActivity extends BaseActivity implements MainFragment.Callbacks {
     private List<Fragment> mFragmentList;
     private Fragment mCurrentFragment;
@@ -57,16 +58,13 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
         addFragment(R.id.layoutPager, mFragmentList.get(0));
 
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()) {
-                case R.id.bottomHome:
-                    addFragment(R.id.layoutPager, mFragmentList.get(0));
-                    break;
-                case R.id.bottomPost:
-                    addFragment(R.id.layoutPager, mFragmentList.get(1));
-                    break;
-                case R.id.bottomPersonal:
-                    addFragment(R.id.layoutPager, mFragmentList.get(2));
-                    break;
+            int i = menuItem.getItemId();
+            if (i == R.id.bottomHome) {
+                addFragment(R.id.layoutPager, mFragmentList.get(0));
+            } else if (i == R.id.bottomPost) {
+                addFragment(R.id.layoutPager, mFragmentList.get(1));
+            } else if (i == R.id.bottomPersonal) {
+                addFragment(R.id.layoutPager, mFragmentList.get(2));
             }
             return true;
         });
@@ -104,5 +102,8 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
     @Override
     public void onItemSelectedListener(Integer id) {
         System.out.println(id);
+        ARouter.getInstance().build("/post/detail")
+                .withInt("id", id).navigation();
+        finish();
     }
 }
