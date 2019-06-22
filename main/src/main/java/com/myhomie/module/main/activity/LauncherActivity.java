@@ -103,7 +103,6 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
     public void onItemSelectedListener(Integer id) {
         System.out.println(id);
         ARouter.getInstance().build("/post/detail")
-                .withInt("id", id).navigation();
-        finish();
+                .withString("id", id.toString()).navigation();
     }
 }

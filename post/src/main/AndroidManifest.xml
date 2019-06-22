@@ -3,7 +3,7 @@
     package="com.myhomie.module.post">
 
     <application android:theme="@style/AppTheme">
-        <activity android:name=".main.LauncherActivity"/>
+        <activity android:name=".activity.LauncherActivity"/>
     </application>
 
 </manifest>
