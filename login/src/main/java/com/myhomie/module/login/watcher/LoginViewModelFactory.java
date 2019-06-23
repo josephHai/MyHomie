@@ -1,4 +1,4 @@
-package com.myhomie.module.login.main;
+package com.myhomie.module.login.watcher;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;

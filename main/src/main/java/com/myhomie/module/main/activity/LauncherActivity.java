@@ -20,6 +20,7 @@ import com.myhomie.module.main.fragment.ReleaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+@Route(path = ARouterConfig.MAIN_ACTIVITY)
 public class LauncherActivity extends BaseActivity implements MainFragment.Callbacks {
     private List<Fragment> mFragmentList;
     private Fragment mCurrentFragment;

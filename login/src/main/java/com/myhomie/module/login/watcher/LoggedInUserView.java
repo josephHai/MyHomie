@@ -1,11 +1,11 @@
-package com.myhomie.module.login.main;
+package com.myhomie.module.login.watcher;
 
 import androidx.annotation.NonNull;
 
 /**
  * Class exposing authenticated user details to the UI.
  */
-class LoggedInUserView {
+public class LoggedInUserView {
     private String id;
     private String username;
     private String password;
@@ -39,7 +39,7 @@ class LoggedInUserView {
         this.password = password;
     }
 
-    String getNickname() {
+    public String getNickname() {
         return nickname;
     }
 

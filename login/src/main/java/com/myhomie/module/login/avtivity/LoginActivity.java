@@ -1,4 +1,4 @@
-package com.myhomie.module.login.main;
+package com.myhomie.module.login.avtivity;
 
 import android.app.Activity;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,8 +16,12 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.textfield.TextInputEditText;
+import com.myhomie.module.common.ARouterConfig;
 import com.myhomie.module.common.base.BaseActivity;
 import com.myhomie.module.login.R;
+import com.myhomie.module.login.watcher.LoggedInUserView;
+import com.myhomie.module.login.watcher.LoginViewModel;
+import com.myhomie.module.login.watcher.LoginViewModelFactory;
 
 public class LoginActivity extends BaseActivity {
 
@@ -108,10 +112,10 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
+    public void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getNickname();
         getDbHelper().insert("user", model);
-        ARouter.getInstance().build("/main/main").navigation();
+        ARouter.getInstance().build(ARouterConfig.MAIN_ACTIVITY).navigation();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 

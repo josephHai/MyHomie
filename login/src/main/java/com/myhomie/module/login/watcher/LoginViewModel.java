@@ -1,4 +1,4 @@
-package com.myhomie.module.login.main;
+package com.myhomie.module.login.watcher;
 
 
 import androidx.lifecycle.LiveData;
@@ -12,6 +12,8 @@ import com.myhomie.module.common.http.HttpClient;
 import com.myhomie.module.common.http.OnResultListener;
 import com.myhomie.module.login.R;
 import com.myhomie.module.login.data.LoginRepository;
+import com.myhomie.module.login.state.LoginFormState;
+import com.myhomie.module.login.state.LoginResult;
 import com.orhanobut.logger.Logger;
 
 public class LoginViewModel extends ViewModel {
@@ -24,11 +26,11 @@ public class LoginViewModel extends ViewModel {
         this.loginRepository = loginRepository;
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
+    public LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
     }
 
-    LiveData<LoginResult> getLoginResult() {
+    public LiveData<LoginResult> getLoginResult() {
         return loginResult;
     }
 
@@ -69,7 +71,7 @@ public class LoginViewModel extends ViewModel {
 
     }
 
-    void loginDataChanged(String username, String password) {
+    public void loginDataChanged(String username, String password) {
         if (!isUserNameValid(username)) {
             loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
         } else if (!isPasswordValid(password)) {

@@ -1,4 +1,4 @@
-package com.myhomie.module.login.main;
+package com.myhomie.module.login.avtivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,20 +21,14 @@ public class LauncherActivity extends BaseActivity {
         Button loginBtn = findViewById(R.id.login);
         Button registerBtn = findViewById(R.id.register);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LauncherActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+        loginBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(LauncherActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LauncherActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        registerBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(LauncherActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
 }
