@@ -44,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
-    public MyDBHelper getDbHelper() {
+    public final MyDBHelper getDbHelper() {
         return dbHelper;
     }
 

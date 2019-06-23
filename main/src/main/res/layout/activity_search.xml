@@ -21,6 +21,7 @@
             android:layout_marginStart="@dimen/activity_vertical_margin"
             android:layout_marginEnd="@dimen/activity_vertical_margin"
             app:iconifiedByDefault="false"
+            android:focusedByDefault="true"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

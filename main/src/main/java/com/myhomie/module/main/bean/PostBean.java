@@ -1,37 +1,46 @@
 package com.myhomie.module.main.bean;
 
-public class PostBean {
-    private int id;
-    private String content;
-    private int imageId;
+import androidx.annotation.NonNull;
 
-    public PostBean(int id, String content, int imageId) {
-        this.id = id;
-        this.content = content;
-        this.imageId = imageId;
+public class PostBean {
+    private Integer id;
+    private String title;
+    private String createdTime;
+
+    public PostBean() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getTitle() {
+        return title;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getImageId() {
-        return imageId;
+    public String getCreatedTime() {
+        return createdTime;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "PostBean{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", createdTime='" + createdTime + '\'' +
+                '}';
     }
 }

@@ -102,8 +102,9 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
 
     @Override
     public void onItemSelectedListener(Integer id) {
-        System.out.println(id);
-        ARouter.getInstance().build("/post/detail")
-                .withString("id", id.toString()).navigation();
+        ARouter.getInstance()
+                .build(ARouterConfig.POST_DETAIL_ACTIVITY)
+                .withString("id", id.toString())
+                .navigation();
     }
 }

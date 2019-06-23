@@ -16,7 +16,7 @@ public class PostAdapter extends BaseQuickAdapter<PostBean, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, PostBean item) {
-        helper.setText(R.id.itemText, item.getContent())
-                .setImageResource(R.id.itemImg, item.getImageId());
+        helper.setText(R.id.main_post_item_title, item.getTitle())
+                .setText(R.id.main_post_item_created, item.getCreatedTime());
     }
 }

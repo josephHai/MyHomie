@@ -4,6 +4,7 @@
     <string name="bottom_home">首页</string>
     <string name="bottom_post">发布</string>
     <string name="bottom_personal">个人</string>
+    <string name="default_nickname">用户名</string>
     <string name="drawer_item_home">首页</string>
     <string name="drawer_item_settings">设置</string>
     <string name="hint_text">表单</string>
