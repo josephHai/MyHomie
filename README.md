@@ -33,20 +33,42 @@
     > EasyRefresh
 界面截图
 
-![首页](https://github.com/josephHai/MyHomie/blob/master/screenshot/home.png)
+<center>
 
-![首页抽屉](https://github.com/josephHai/MyHomie/blob/master/screenshot/home_drawer.png)
+![首页](https://github.com/josephHai/MyHomie/blob/master/screenshot/home.jpg)
 
-![帖子详情页](https://github.com/josephHai/MyHomie/blob/master/screenshot/post_detail.png)
+## 首页
 
-![登录注册欢迎页](https://github.com/josephHai/MyHomie/blob/master/screenshot/info.png)
+![首页抽屉](https://github.com/josephHai/MyHomie/blob/master/screenshot/home_drawer.jpg)
 
-![登录界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/login.png)
+## 首页抽屉
 
-![注册界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/register.png)
+![帖子详情页](https://github.com/josephHai/MyHomie/blob/master/screenshot/post_detail.jpg)
 
-![搜索界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/search.png)
+## 帖子详情
 
-![发帖界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/release.png)
+![登录注册欢迎页](https://github.com/josephHai/MyHomie/blob/master/screenshot/info.jpg)
 
-![个人界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/person.png)
+## 登录注册欢迎页
+
+![登录界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/login.jpg)
+
+## 登录
+
+![注册界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/register.jpg)
+
+## 注册
+
+![搜索界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/search.jpg)
+
+## 搜索
+
+![发帖界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/release.jpg)
+
+## 发帖
+
+![个人界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/person.jpg)
+
+## 个人
+
+</center>
