@@ -51,7 +51,6 @@ public class LoginViewModel extends ViewModel {
                 }else {
                     JSONObject data = JSONObject.parseObject(res.getString("data"));
                     BaseApplication.getIns().setToken(data.getString("token"));
-                    System.out.println(data.getString("token"));
                     getUserInfo();
                 }
             }

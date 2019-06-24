@@ -45,12 +45,6 @@ public class SearchActivity extends BaseActivity {
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            System.out.println(query);
-        }
-
         initAdapter();
         initListener();
     }
@@ -83,7 +77,6 @@ public class SearchActivity extends BaseActivity {
                     Toast.makeText(new SearchActivity(), res.getString("msg"), Toast.LENGTH_SHORT).show();
                 }else {
                     postAdapter.setNewData(JSONArray.parseArray(res.getString("data"), PostBean.class));
-                    System.out.println(postList);
                 }
             }
         });

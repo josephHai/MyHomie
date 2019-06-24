@@ -30,7 +30,6 @@ public class LauncherActivity extends BaseActivity {
         setContentView(R.layout.post_launcher);
 
         ARouter.getInstance().inject(this);
-        System.out.println(id);
 
         initDraw();
         initListener();

@@ -25,9 +25,7 @@ public class StatusUtils {
      */
     public void login() {
         List<User> userList = myDBHelper.find(User.class);
-        System.out.println("login");
         if (!userList.isEmpty()) {
-            System.out.println("auto");
             User user = userList.get(0);
             HttpClient client = new HttpClient.Builder()
                     .url("login")

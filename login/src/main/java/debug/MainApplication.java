@@ -1,6 +1,5 @@
 package debug;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.myhomie.module.common.base.BaseApplication;
 import com.myhomie.module.common.http.HttpClient;
@@ -27,7 +26,6 @@ public class MainApplication extends BaseApplication {
             public void onSuccess(String result) {
                 Logger.e(result);
                 JSONObject json = JSONObject.parseObject(result);
-                System.out.println(json.getString("msg"));
             }
 
             @Override
