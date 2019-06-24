@@ -71,6 +71,16 @@ public class MyDBHelper extends SQLiteOpenHelper {
         cursor.close();
     }
 
+    public void delete(String tableName, Object object) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        SqlUtils sqlUtils = new SqlUtils();
+        ContentValues values = sqlUtils.parseObj(object);
+
+        String sql = "DELETE FROM " + tableName + " WHERE id = " + values.get("id");
+        db.execSQL(sql);
+    }
+
     public <T> List<T> find(Class<T> clazz) {
         String sql = "SELECT * FROM " + clazz.getSimpleName().toLowerCase() + conditionStr;
         Cursor cursor = this.getReadableDatabase().rawQuery(sql, null);

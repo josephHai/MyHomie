@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,12 +26,21 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.ExpandableBadgeDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.myhomie.module.common.MyDBHelper;
 import com.myhomie.module.common.http.HttpClient;
 import com.myhomie.module.common.http.OnResultListener;
+import com.myhomie.module.common.model.User;
 import com.myhomie.module.main.R;
 import com.myhomie.module.main.adapter.PostCardAdapter;
 import com.myhomie.module.main.bean.PostCardBean;
@@ -58,6 +68,7 @@ public class MainFragment extends Fragment {
     //该Fragment将通过该接口与他它所在的Activity交互
     public interface Callbacks{
         void onItemSelectedListener(Integer id);
+        void onDrawItemSelectedListener(Integer resId);
     }
 
     @Nullable
@@ -80,7 +91,7 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (!(context instanceof Callbacks)) {
             throw new IllegalStateException("必须实现Callbacks接口");
@@ -137,42 +148,84 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void initDrawer() {
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_home);
-        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_settings);
+    private OnCheckedChangeListener checkedChangeListener = (drawerItem, buttonView, isChecked) -> {
+        if(drawerItem instanceof Nameable) {
+            Toast.makeText(getActivity(),((Nameable)drawerItem).getName() + "'s check is" + isChecked,Toast.LENGTH_SHORT).show();
+        }
 
+    };
+
+    private void initDrawer() {
+        MyDBHelper dbHelper = new MyDBHelper(getContext());
+        String nickname;
+        String avatar;
+        List<User> userList = dbHelper.find(User.class);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        if (!userList.isEmpty()){
+            nickname = userList.get(0).getNickname();
+            avatar = userList.get(0).getAvatar();
+        }else {
+            nickname = getString(R.string.default_nickname);
+            avatar = getString(R.string.default_avatar);
+        }
+
+        IProfile profile = new ProfileDrawerItem()
+                .withName(nickname)
+                .withIcon(avatar)
+                .withIdentifier(100);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(getActivity())
-                .withHeaderBackground(R.drawable.header)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile))
-                )
-                .withOnAccountHeaderListener((view, profile, currentProfile) -> false)
-                .build();
-
-        //create the drawer and remember the `Drawer` result object
-        Drawer result = new DrawerBuilder()
-                .withAccountHeader(headerResult)
-                .withActivity(getActivity())
-                .withToolbar(toolbar)
-                .addDrawerItems(
-                        item1,
-                        new DividerDrawerItem(),
-                        item2,
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings)
-                )
-                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    System.out.println(position);
-                    // do something with the clicked item :D
+                .withTranslucentStatusBar(true)
+                .withHeaderBackground(R.color.transparent)
+                .addProfiles(profile)
+                .withOnAccountHeaderListener((view, profile1, current) -> {
+                    if ((int) profile1.getIdentifier() == 100) {
+                        System.out.println("this icon is clicked");
+                    }
                     return true;
                 })
+                .build();
+
+        new DrawerBuilder()
+                .withActivity(getActivity())
+                .withAccountHeader(headerResult)
+                .withToolbar(toolbar)
+                .addDrawerItems(
+                        new PrimaryDrawerItem()
+                        .withIdentifier(1)
+                        .withName(R.string.drawer_item_home)
+                        .withSelectable(false),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem()
+                        .withIdentifier(2)
+                        .withName(R.string.drawer_item_person),
+                        new SecondaryDrawerItem()
+                        .withIdentifier(3)
+                        .withName(R.string.drawer_item_settings)
+                )
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    switch ((int) drawerItem.getIdentifier()){
+                        case 1:
+                            mCallbacks.onDrawItemSelectedListener(R.string.drawer_item_home);
+                            break;
+                        case 2:
+                            mCallbacks.onDrawItemSelectedListener(R.string.drawer_item_person);
+                            break;
+                        case 3:
+                            mCallbacks.onDrawItemSelectedListener(R.string.drawer_item_settings);
+                        default:
+                            break;
+                    }
+                    return false;
+                })
+                .withShowDrawerOnFirstLaunch(true)  //设置为默认启动抽屉菜单
                 .build();
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.main_menu, menu);
@@ -200,14 +253,11 @@ public class MainFragment extends Fragment {
                                 Toast.makeText(view.getContext(), res.getString("msg"), Toast.LENGTH_LONG).show();
                             }else {
                                 String data = JSONObject.parseObject(res.getString("data")).getString("list");
-                                mEasyRefreshLayout.loadMoreComplete(new EasyRefreshLayout.Event() {
-                                    @Override
-                                    public void complete() {
-                                        postCardAdapter.getData().addAll(JSONObject.parseArray(data, PostCardBean.class));
-                                        postCardAdapter.notifyDataSetChanged();
-                                        currentPage++;
-                                        mCurrentCounter = postCardAdapter.getData().size();
-                                    }
+                                mEasyRefreshLayout.loadMoreComplete(() -> {
+                                    postCardAdapter.getData().addAll(JSONObject.parseArray(data, PostCardBean.class));
+                                    postCardAdapter.notifyDataSetChanged();
+                                    currentPage++;
+                                    mCurrentCounter = postCardAdapter.getData().size();
                                 }, 500);
                             }
                         }
@@ -220,5 +270,11 @@ public class MainFragment extends Fragment {
                 new Handler().postDelayed(() -> initList(), delayMillis);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initDrawer();
     }
 }

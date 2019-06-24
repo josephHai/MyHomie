@@ -4,8 +4,10 @@
     <string name="bottom_home">首页</string>
     <string name="bottom_post">发布</string>
     <string name="bottom_personal">个人</string>
-    <string name="default_nickname">用户名</string>
+    <string name="default_nickname">登录</string>
+    <string name="default_avatar">https://www.buxizhou.com/app/public/static/images/avatar/default/1.jpg</string>
     <string name="drawer_item_home">首页</string>
+    <string name="drawer_item_person">个人界面</string>
     <string name="drawer_item_settings">设置</string>
     <string name="hint_text">表单</string>
     <string name="hint_title">标题</string>
@@ -22,4 +24,20 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

@@ -12,6 +12,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myhomie.module.common.ARouterConfig;
 import com.myhomie.module.common.base.BaseActivity;
+import com.myhomie.module.common.base.BaseApplication;
+import com.myhomie.module.common.utils.StatusUtils;
 import com.myhomie.module.main.fragment.PersonFragment;
 import com.myhomie.module.main.R;
 import com.myhomie.module.main.fragment.MainFragment;
@@ -31,8 +33,12 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+        StatusUtils statusUtils = new StatusUtils();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        if (!statusUtils.isLogin()) {
+            statusUtils.login();
+        }
 
         initFragment();
         initBottomNavigationView();
@@ -63,7 +69,11 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
             if (i == R.id.bottomHome) {
                 addFragment(R.id.layoutPager, mFragmentList.get(0));
             } else if (i == R.id.bottomPost) {
-                addFragment(R.id.layoutPager, mFragmentList.get(1));
+                if (BaseApplication.getIns().getToken().isEmpty()) {
+                    ARouter.getInstance().build(ARouterConfig.LOGIN_ACTIVITY).navigation();
+                }else {
+                    addFragment(R.id.layoutPager, mFragmentList.get(1));
+                }
             } else if (i == R.id.bottomPersonal) {
                 addFragment(R.id.layoutPager, mFragmentList.get(2));
             }
@@ -106,5 +116,19 @@ public class LauncherActivity extends BaseActivity implements MainFragment.Callb
                 .build(ARouterConfig.POST_DETAIL_ACTIVITY)
                 .withString("id", id.toString())
                 .navigation();
+    }
+
+    @Override
+    public void onDrawItemSelectedListener(Integer resId) {
+        if (resId == R.string.drawer_item_person) {
+            bottomNavigationView.setSelectedItemId(bottomNavigationView.getMenu().getItem(2).getItemId());
+        } else if (resId == R.string.drawer_item_settings) {
+            startActivity(new Intent(LauncherActivity.this, SettingsActivity.class));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
