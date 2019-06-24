@@ -26,6 +26,7 @@ import com.myhomie.module.common.http.HttpClient;
 import com.myhomie.module.common.model.User;
 import com.myhomie.module.common.utils.StatusUtils;
 import com.myhomie.module.main.R;
+import com.myhomie.module.main.activity.EmptyActivity;
 import com.myhomie.module.main.activity.SettingsActivity;
 import com.myhomie.module.main.adapter.ListAdapter;
 import com.myhomie.module.main.bean.ListBean;
@@ -82,6 +83,7 @@ public class PersonFragment extends Fragment {
                     break;
                 case 1:
                     new StatusUtils().logout();
+                    startActivity(new Intent(getActivity(), EmptyActivity.class));
                 default:
                     break;
             }
