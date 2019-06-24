@@ -1,6 +1,8 @@
 package com.myhomie.module.main.fragment;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -8,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,22 +23,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.ExpandableBadgeDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
-import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.myhomie.module.common.MyDBHelper;
 import com.myhomie.module.common.http.HttpClient;
 import com.myhomie.module.common.http.OnResultListener;
@@ -170,6 +170,14 @@ public class MainFragment extends Fragment {
             avatar = getString(R.string.default_avatar);
         }
 
+        DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+            @Override
+            public void set(ImageView imageView, Uri uri, Drawable placeholder) {
+                super.set(imageView, uri, placeholder);
+                Glide.with(imageView.getContext()).load(uri).into(imageView);
+            }
+        });
+
         IProfile profile = new ProfileDrawerItem()
                 .withName(nickname)
                 .withIcon(avatar)
@@ -178,6 +186,7 @@ public class MainFragment extends Fragment {
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(getActivity())
                 .withTranslucentStatusBar(true)
+                .withSelectionListEnabled(false)
                 .withHeaderBackground(R.color.transparent)
                 .addProfiles(profile)
                 .withOnAccountHeaderListener((view, profile1, current) -> {
