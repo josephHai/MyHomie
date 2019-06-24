@@ -31,3 +31,22 @@
 8. 登录与注册功能的实现采用了观察者模式
 9. 首页下拉刷新，上拉加载的实现
     > EasyRefresh
+界面截图
+
+![首页](https://github.com/josephHai/MyHomie/blob/master/screenshot/home.png)
+
+![首页抽屉](https://github.com/josephHai/MyHomie/blob/master/screenshot/home_drawer.png)
+
+![帖子详情页](https://github.com/josephHai/MyHomie/blob/master/screenshot/post_detail.png)
+
+![登录注册欢迎页](https://github.com/josephHai/MyHomie/blob/master/screenshot/info.png)
+
+![登录界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/login.png)
+
+![注册界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/register.png)
+
+![搜索界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/search.png)
+
+![发帖界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/release.png)
+
+![个人界面](https://github.com/josephHai/MyHomie/blob/master/screenshot/person.png)
